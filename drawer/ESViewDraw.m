@@ -8,6 +8,13 @@
 
 #import "ESViewDraw.h"
 
+@interface ESViewDraw()
+
+@property (assign,nonatomic) CGPoint beginPoint;
+@property (strong,nonatomic) NSMutableArray *pointsForDraw;
+
+@end
+
 @implementation ESViewDraw
 
 #pragma mark - Touch handlers
@@ -15,11 +22,15 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
     
+    CGPoint touchPoint = [[touches anyObject] locationInView:self];
+    NSLog(@"touchesBegan p=%@",NSStringFromCGPoint(touchPoint));
+    
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-    
+    CGPoint touchPoint = [[touches anyObject] locationInView:self];
+    NSLog(@"touchesMoved p=%@",NSStringFromCGPoint(touchPoint));
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event

@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "ESViewDraw.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet ESViewDraw *viewDraw;
 
 @end
 
@@ -16,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    [self.viewDraw setUserInteractionEnabled:YES];
 }
 
 - (void)didReceiveMemoryWarning {

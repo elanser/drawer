@@ -9,14 +9,18 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
+#pragma mark - ESViewDrawDelegate
 @protocol ESViewDrawDelegate <NSObject>
 -(void) draw:(NSMutableArray*) pointsArray onView:(UIView*) view withContext:(CGContextRef) context;
 @optional
+-(void) setStrokeWidth:(CGFloat) width;
 -(void) drawPoint:(CGPoint) point withColor:(UIColor*) color forContext:(CGContextRef) context;
 -(void) drawLine:(CGPoint) fromPoint toPoint:(CGPoint) toPoint withColor:(UIColor*) color forContext:(CGContextRef) context;
 -(void) drawCircle:(CGPoint) centerPoint radius:(CGFloat) radius withColor:(UIColor*) color forContext:(CGContextRef) context;
 @end
 
+#pragma mark - ESViewDraw
 @interface ESViewDraw : UIView
 
 @end

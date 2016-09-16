@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ESViewDraw.h"
 
-@interface ESDrawDelegate : NSObject
+@interface ESDrawDelegate : NSObject <ESViewDrawDelegate>
+
+@property (assign,nonatomic)    CGFloat strokeWidth;
+@property (weak,nonatomic)      UIColor *currentColor;
 
 @end

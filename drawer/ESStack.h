@@ -9,5 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface ESStack : NSObject
+{
+    NSMutableArray* stack;
+}
+
+-(id) pop;
+-(void) push:(id)element;
+-(void) clear;
+-(NSInteger) count;
+-(NSArray*) toArray;
 
 @end

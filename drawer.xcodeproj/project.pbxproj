@@ -16,6 +16,7 @@
 		CA853A571D8BFC7600976F58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA853A551D8BFC7600976F58 /* LaunchScreen.storyboard */; };
 		CA853A601D8C194F00976F58 /* ESViewDraw.m in Sources */ = {isa = PBXBuildFile; fileRef = CA853A5F1D8C194F00976F58 /* ESViewDraw.m */; };
 		CA853A651D8C4E1700976F58 /* ESDrawDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA853A641D8C4E1700976F58 /* ESDrawDelegate.m */; };
+		CA853A681D8C5BE500976F58 /* ESStack.m in Sources */ = {isa = PBXBuildFile; fileRef = CA853A671D8C5BE500976F58 /* ESStack.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,8 @@
 		CA853A621D8C19CA00976F58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		CA853A631D8C4E1700976F58 /* ESDrawDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESDrawDelegate.h; sourceTree = "<group>"; };
 		CA853A641D8C4E1700976F58 /* ESDrawDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESDrawDelegate.m; sourceTree = "<group>"; };
+		CA853A661D8C5BE500976F58 /* ESStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESStack.h; sourceTree = "<group>"; };
+		CA853A671D8C5BE500976F58 /* ESStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESStack.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 		CA853A431D8BFC7600976F58 /* drawer */ = {
 			isa = PBXGroup;
 			children = (
+				CA853A661D8C5BE500976F58 /* ESStack.h */,
+				CA853A671D8C5BE500976F58 /* ESStack.m */,
 				CA853A631D8C4E1700976F58 /* ESDrawDelegate.h */,
 				CA853A641D8C4E1700976F58 /* ESDrawDelegate.m */,
 				CA853A5E1D8C194F00976F58 /* ESViewDraw.h */,
@@ -166,6 +171,7 @@
 				CA853A521D8BFC7600976F58 /* drawer.xcdatamodeld in Sources */,
 				CA853A4C1D8BFC7600976F58 /* ViewController.m in Sources */,
 				CA853A491D8BFC7600976F58 /* AppDelegate.m in Sources */,
+				CA853A681D8C5BE500976F58 /* ESStack.m in Sources */,
 				CA853A601D8C194F00976F58 /* ESViewDraw.m in Sources */,
 				CA853A651D8C4E1700976F58 /* ESDrawDelegate.m in Sources */,
 				CA853A461D8BFC7600976F58 /* main.m in Sources */,

@@ -14,6 +14,7 @@
 		CA853A521D8BFC7600976F58 /* drawer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA853A501D8BFC7600976F58 /* drawer.xcdatamodeld */; };
 		CA853A541D8BFC7600976F58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA853A531D8BFC7600976F58 /* Assets.xcassets */; };
 		CA853A571D8BFC7600976F58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA853A551D8BFC7600976F58 /* LaunchScreen.storyboard */; };
+		CA853A601D8C194F00976F58 /* ESViewDraw.m in Sources */ = {isa = PBXBuildFile; fileRef = CA853A5F1D8C194F00976F58 /* ESViewDraw.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,9 @@
 		CA853A531D8BFC7600976F58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA853A561D8BFC7600976F58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA853A581D8BFC7600976F58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA853A5E1D8C194F00976F58 /* ESViewDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESViewDraw.h; sourceTree = "<group>"; };
+		CA853A5F1D8C194F00976F58 /* ESViewDraw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESViewDraw.m; sourceTree = "<group>"; };
+		CA853A621D8C19CA00976F58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 		CA853A431D8BFC7600976F58 /* drawer */ = {
 			isa = PBXGroup;
 			children = (
+				CA853A5E1D8C194F00976F58 /* ESViewDraw.h */,
+				CA853A5F1D8C194F00976F58 /* ESViewDraw.m */,
 				CA853A471D8BFC7600976F58 /* AppDelegate.h */,
 				CA853A481D8BFC7600976F58 /* AppDelegate.m */,
 				CA853A4A1D8BFC7600976F58 /* ViewController.h */,
@@ -155,6 +161,7 @@
 				CA853A521D8BFC7600976F58 /* drawer.xcdatamodeld in Sources */,
 				CA853A4C1D8BFC7600976F58 /* ViewController.m in Sources */,
 				CA853A491D8BFC7600976F58 /* AppDelegate.m in Sources */,
+				CA853A601D8C194F00976F58 /* ESViewDraw.m in Sources */,
 				CA853A461D8BFC7600976F58 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -166,6 +173,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				CA853A4E1D8BFC7600976F58 /* Base */,
+				CA853A621D8C19CA00976F58 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

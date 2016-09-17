@@ -11,6 +11,19 @@
 
 @interface ESViewDraw()
 
+@end
+
+enum TPointType {PTBeginPoint, PTOrdinaryPoint};
+typedef enum TPointType TPointType;
+
+@interface  ESPoint : NSObject
+
+@property (assign,nonatomic) CGPoint point;
+@property (assign,nonatomic) TPointType pointType;
+
+@end
+
+@implementation ESPoint
 
 @end
 
@@ -18,29 +31,42 @@
 
 #pragma mark - Touch handlers
 
+-(instancetype) initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self){
+        NSMutableArray *array = [[NSMutableArray alloc]init];
+        self.currentPointArray = array;
+    }
+    return self;
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
     
     CGPoint touchPoint = [[touches anyObject] locationInView:self];
-    NSLog(@"touchesBegan p=%@",NSStringFromCGPoint(touchPoint));
-    
-    
+    ESPoint *point = [[ESPoint alloc] init];
+    point.point = CGPointMake(touchPoint.x, touchPoint.y);
+    point.pointType = PTBeginPoint;
+    [self.currentPointArray addObject:point];//[NSValue valueWithCGPoint:touchPoint]];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-    @synchronized (self.pointsStack) {
-        CGPoint touchPoint = [[touches anyObject] locationInView:self];
-        NSLog(@"touchesMoved p=%@, count = %d",NSStringFromCGPoint(touchPoint),self.pointsStack.count);
-        [self.pointsStack push:[NSValue valueWithCGPoint:touchPoint]];
-    }
+
+    CGPoint touchPoint = [[touches anyObject] locationInView:self];
+    ESPoint *point = [[ESPoint alloc] init];
+    point.point = CGPointMake(touchPoint.x, touchPoint.y);
+    point.pointType = PTOrdinaryPoint;
+    
+    [self.currentPointArray addObject:point];//[NSValue valueWithCGPoint:touchPoint]];
     [self setNeedsDisplay];
 
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-    [self.pointsStack clear];
+    
 }
 
 - (void)touchesCancelled:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
@@ -57,21 +83,31 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    if (self.pointsStack.count>0)
-    {
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGPoint p1 = [[[self.pointsStack toArray] firstObject] CGPointValue];
-        for (int i=1;i<self.pointsStack.count;i++)
+    CGContextRef context = UIGraphicsGetCurrentContext();
+//    for (NSArray* pointArray in self.arraysOfPoints)
+//    {
+        if (self.currentPointArray.count>0)
         {
-            CGPoint p2 = [[[self.pointsStack toArray]objectAtIndex:i ] CGPointValue];
-            CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
-            CGContextSetLineWidth(context, 5);//self.strokeWidth);
-            CGContextMoveToPoint(context, p1.x, p1.y);
-            CGContextAddLineToPoint(context, p2.x, p2.y);
-            CGContextStrokePath(context);
-            p1=CGPointMake(p2.x, p2.y);
+            
+            ESPoint *p1 = [self.currentPointArray firstObject];
+            for (int i=1;i<self.currentPointArray.count;i++)
+            {
+                ESPoint *p2 = [self.currentPointArray objectAtIndex:i ];
+                CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
+                CGContextSetLineWidth(context, 5);//self.strokeWidth);
+                if (p1.pointType==PTBeginPoint)
+                {
+                    CGContextMoveToPoint(context, p1.point.x, p1.point.y);
+                }
+                else if (p2.pointType!=PTBeginPoint) {
+                    CGContextMoveToPoint(context, p1.point.x, p1.point.y);
+                    CGContextAddLineToPoint(context, p2.point.x, p2.point.y);
+                    CGContextStrokePath(context);
+                }
+                p1=p2;
+            }
         }
-    }
+//    }
 }
 
 @end

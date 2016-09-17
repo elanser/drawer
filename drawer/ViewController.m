@@ -20,11 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.viewDraw.currentPointArray = [[NSMutableArray alloc] init];
     [self.viewDraw setUserInteractionEnabled:YES];
     
     ESDrawDelegate *delegate = [[ESDrawDelegate alloc]init];
-    ESStack *stack = [[ESStack alloc]init];
-    self.viewDraw.pointsStack = stack;
+
     self.viewDraw.drawDelegate = delegate;
     
 }

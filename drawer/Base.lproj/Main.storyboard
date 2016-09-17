@@ -27,12 +27,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="viewDraw" destination="wrg-bI-Fsp" id="uN1-u2-cXT"/>
+                        <outlet property="viewDraw" destination="wrg-bI-Fsp" id="JMB-w6-RpO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="742" y="788"/>
+            <point key="canvasLocation" x="593" y="120"/>
         </scene>
     </scenes>
 </document>

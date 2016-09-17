@@ -25,7 +25,7 @@
 #pragma mark - ESViewDraw
 @interface ESViewDraw : UIView
 
-@property (strong,nonatomic) ESStack* pointsStack;
+@property (strong,nonatomic) NSMutableArray *currentPointArray;
 @property (strong,nonatomic) id <ESViewDrawDelegate> drawDelegate;
 
 @end

@@ -74,6 +74,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="viewCurrentColor" destination="iCQ-nc-84h" id="tph-xZ-Vpz"/>
                         <outlet property="viewDraw" destination="wrg-bI-Fsp" id="JMB-w6-RpO"/>
                         <outlet property="viewPanel" destination="rwO-4n-zO2" id="iE0-3i-cyd"/>
                         <outletCollection property="colorViews" destination="BGa-tb-zl0" id="1jp-9t-qAe"/>

@@ -20,6 +20,7 @@ typedef enum TPointType TPointType;
 
 @property (assign,nonatomic) CGPoint point;
 @property (assign,nonatomic) TPointType pointType;
+@property (strong,nonatomic) UIColor *color;
 
 @end
 
@@ -27,41 +28,63 @@ typedef enum TPointType TPointType;
 
 @end
 
+NSString* const ColorChangedNotification=@"ColorChangedNotification";
+NSString* const ColorChangedKey=@"ColorChangedKey";
+
 @implementation ESViewDraw
+
+#pragma mark - Notifications 
+
+-(void) colorChanged:(NSNotification*) notification
+{
+    self.currentColor = [notification.userInfo objectForKey:ColorChangedKey];
+}
+
+#pragma mark - Constructor, destructor
+
+-(void) initMe
+{
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    
+    self.currentPointArray = array;
+    self.currentColor = [UIColor blackColor];
+    
+    [[NSNotificationCenter defaultCenter]   addObserver:self
+                                            selector:@selector(colorChanged:)
+                                            name:ColorChangedNotification
+                                            object:nil];
+
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark - Touch handlers
 
--(instancetype) initWithFrame:(CGRect)frame
+- (ESPoint*)CGPoint2ESPoint:(CGPoint) touchPoint withPointType:(TPointType) pointType
 {
-    self = [super initWithFrame:frame];
-    if (self){
-        NSMutableArray *array = [[NSMutableArray alloc]init];
-        self.currentPointArray = array;
-    }
-    return self;
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
-{
-    
-    CGPoint touchPoint = [[touches anyObject] locationInView:self];
     ESPoint *point = [[ESPoint alloc] init];
     point.point = CGPointMake(touchPoint.x, touchPoint.y);
-    point.pointType = PTBeginPoint;
-    [self.currentPointArray addObject:point];//[NSValue valueWithCGPoint:touchPoint]];
+    point.pointType = pointType;
+    point.color = self.currentColor;
+    return point;
+}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
+{
+    CGPoint touchPoint = [[touches anyObject] locationInView:self];
+    ESPoint *point = [self CGPoint2ESPoint:touchPoint withPointType:PTBeginPoint];
+    point.color = self.currentColor;
+    [self.currentPointArray addObject:point];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-
     CGPoint touchPoint = [[touches anyObject] locationInView:self];
-    ESPoint *point = [[ESPoint alloc] init];
-    point.point = CGPointMake(touchPoint.x, touchPoint.y);
-    point.pointType = PTOrdinaryPoint;
-    
-    [self.currentPointArray addObject:point];//[NSValue valueWithCGPoint:touchPoint]];
+    ESPoint *point = [self CGPoint2ESPoint:touchPoint withPointType:PTOrdinaryPoint];
+    [self.currentPointArray addObject:point];
     [self setNeedsDisplay];
-
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
@@ -93,7 +116,7 @@ typedef enum TPointType TPointType;
             for (int i=1;i<self.currentPointArray.count;i++)
             {
                 ESPoint *p2 = [self.currentPointArray objectAtIndex:i ];
-                CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
+                CGContextSetStrokeColorWithColor(context, p1.color.CGColor);
                 CGContextSetLineWidth(context, 5);//self.strokeWidth);
                 if (p1.pointType==PTBeginPoint)
                 {

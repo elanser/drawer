@@ -10,22 +10,16 @@
 #import <UIKit/UIKit.h>
 @class ESStack;
 
-
-#pragma mark - ESViewDrawDelegate
-@protocol ESViewDrawDelegate <NSObject>
--(void) draw:(ESStack*) pointsStack onView:(UIView*) view withContext:(CGContextRef) context;
-@optional
--(void) setStrokeWidth:(CGFloat) width;
--(void) drawPoint:(CGPoint) point withColor:(UIColor*) color forContext:(CGContextRef) context;
--(void) drawLine:(CGPoint) fromPoint toPoint:(CGPoint) toPoint withColor:(UIColor*) color forContext:(CGContextRef) context;
--(void) drawCircle:(CGPoint) centerPoint radius:(CGFloat) radius withColor:(UIColor*) color forContext:(CGContextRef) context;
-@end
+extern NSString* const ColorChangedNotification;
+extern NSString* const ColorChangedKey;
 
 
 #pragma mark - ESViewDraw
 @interface ESViewDraw : UIView
 
 @property (strong,nonatomic) NSMutableArray *currentPointArray;
-@property (strong,nonatomic) id <ESViewDrawDelegate> drawDelegate;
+@property (strong,nonatomic) UIColor *currentColor;
+
+-(void) initMe;
 
 @end

@@ -29,7 +29,16 @@
     tapGesture.delegate = self;
     [self.viewPanel addGestureRecognizer:tapGesture];
     
-    [NSNotificationCenter defaultCenter ]
+    [[NSNotificationCenter defaultCenter]
+                                addObserver:self
+                                selector:@selector(changeStrokeColor:)
+                                name:ColorChangedNotification
+                                object:nil];
+}
+
+- (void) changeStrokeColor:(NSNotification*)notification
+{
+    self.viewCurrentColor.backgroundColor = [notification.userInfo objectForKey:ColorChangedKey];
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
@@ -49,7 +58,7 @@
 
 -(void) dealloc
 {
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - ViewController

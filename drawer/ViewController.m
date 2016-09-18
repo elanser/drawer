@@ -9,10 +9,11 @@
 #import "ViewController.h"
 #import "ESViewDraw.h"
 #import "ESStack.h"
-#import "ESDrawDelegate.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet ESViewDraw *viewDraw;
+@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *colorViews;
+@property (weak, nonatomic) IBOutlet UIView *viewPanel;
 
 @end
 
@@ -22,11 +23,6 @@
     [super viewDidLoad];
     self.viewDraw.currentPointArray = [[NSMutableArray alloc] init];
     [self.viewDraw setUserInteractionEnabled:YES];
-    
-    ESDrawDelegate *delegate = [[ESDrawDelegate alloc]init];
-
-    self.viewDraw.drawDelegate = delegate;
-    
 }
 
 - (void)didReceiveMemoryWarning {

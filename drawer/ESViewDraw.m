@@ -8,28 +8,13 @@
 
 #import "ESViewDraw.h"
 #import "ESStack.h"
+NSString* const ColorChangedNotification=@"ColorChangedNotification";
+NSString* const ColorChangedKey=@"ColorChangedKey";
 
 @interface ESViewDraw()
 
 @end
 
-enum TPointType {PTBeginPoint, PTOrdinaryPoint};
-typedef enum TPointType TPointType;
-
-@interface  ESPoint : NSObject
-
-@property (assign,nonatomic) CGPoint point;
-@property (assign,nonatomic) TPointType pointType;
-@property (strong,nonatomic) UIColor *color;
-
-@end
-
-@implementation ESPoint
-
-@end
-
-NSString* const ColorChangedNotification=@"ColorChangedNotification";
-NSString* const ColorChangedKey=@"ColorChangedKey";
 
 @implementation ESViewDraw
 {
@@ -80,14 +65,6 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
 
 #pragma mark - Touch handlers
 
-- (ESPoint*)CGPoint2ESPoint:(CGPoint) touchPoint withPointType:(TPointType) pointType
-{
-    ESPoint *point = [[ESPoint alloc] init];
-    point.point = CGPointMake(touchPoint.x, touchPoint.y);
-    point.pointType = pointType;
-    point.color = self.currentColor;
-    return point;
-}
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
     UITouch *touch = [touches anyObject];

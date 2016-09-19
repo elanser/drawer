@@ -19,6 +19,5 @@ extern NSString* const ColorChangedKey;
 
 @property (strong,nonatomic) UIColor *currentColor;
 
--(void) initMe;
 
 @end

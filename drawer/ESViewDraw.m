@@ -86,6 +86,7 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
     CGPoint p = [touch locationInView:self];
     [path addLineToPoint:p];
     [self drawBitmap]; // (3)
+    [self fillPath:[UIColor blueColor]];
     [self setNeedsDisplay];
     [path removeAllPoints]; //(4)
     
@@ -127,7 +128,15 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
 
     [self setStrokeColor:self.currentColor];
     [incrementalImage drawInRect:rect]; // (3)
+    //[self fillPath:self.currentColor];
     [path stroke];
+}
+
+-(void) fillPath:(UIColor*) color
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    [path fill];
 }
 
 

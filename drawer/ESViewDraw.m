@@ -32,16 +32,30 @@ NSString* const ColorChangedNotification=@"ColorChangedNotification";
 NSString* const ColorChangedKey=@"ColorChangedKey";
 
 @implementation ESViewDraw
-
+{
+    UIBezierPath *path;
+    UIImage *incrementalImage;
+}
 #pragma mark - Notifications 
 
 -(void) colorChanged:(NSNotification*) notification
 {
     self.currentColor = [notification.userInfo objectForKey:ColorChangedKey];
+    [self erase];
 }
+
 
 #pragma mark - Constructor, destructor
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setMultipleTouchEnabled:NO];
+        [self setBackgroundColor:[UIColor clearColor]];
+        path = [UIBezierPath bezierPath];
+        [path setLineWidth:5.0];
+    }
+    return self;
+}
 -(void) initMe
 {
     NSMutableArray *array = [[NSMutableArray alloc]init];
@@ -55,6 +69,15 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
                                             object:nil];
 
 }
+
+- (void)erase {
+    path   = nil;  //Set current path nil
+    path   = [UIBezierPath bezierPath]; //Create new path
+    incrementalImage = nil;
+    [path setLineWidth:5.0];
+    [self setNeedsDisplay];
+}
+
 
 - (void) dealloc
 {
@@ -73,28 +96,33 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-    CGPoint touchPoint = [[touches anyObject] locationInView:self];
-    ESPoint *point = [self CGPoint2ESPoint:touchPoint withPointType:PTBeginPoint];
-    point.color = self.currentColor;
-    [self.currentPointArray addObject:point];
+    UITouch *touch = [touches anyObject];
+    CGPoint p = [touch locationInView:self];
+    [path moveToPoint:p];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-    CGPoint touchPoint = [[touches anyObject] locationInView:self];
-    ESPoint *point = [self CGPoint2ESPoint:touchPoint withPointType:PTOrdinaryPoint];
-    [self.currentPointArray addObject:point];
+    UITouch *touch = [touches anyObject];
+    CGPoint p = [touch locationInView:self];
+    [path addLineToPoint:p];
     [self setNeedsDisplay];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
+    UITouch *touch = [touches anyObject];
+    CGPoint p = [touch locationInView:self];
+    [path addLineToPoint:p];
+    [self drawBitmap]; // (3)
+    [self setNeedsDisplay];
+    [path removeAllPoints]; //(4)
     
 }
 
 - (void)touchesCancelled:(nullable NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
 {
-    
+     [self touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesEstimatedPropertiesUpdated:(NSSet * _Nonnull)touches
@@ -103,34 +131,26 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
 }
 
 #pragma mark - Draw methods
+- (void)drawBitmap // (3)
+{
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+    //[[UIColor blueColor] setStroke];
+    if (!incrementalImage) { // first draw;
+        UIBezierPath *rectpath = [UIBezierPath bezierPathWithRect:self.bounds]; // enclosing bitmap by a rectangle defined by another UIBezierPath object
+        [[UIColor clearColor] setFill];
+        [rectpath fill]; // fill it
+    }
+    [incrementalImage drawAtPoint:CGPointZero];
+    [path stroke];
+    incrementalImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+}
 
 - (void)drawRect:(CGRect)rect
 {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-//    for (NSArray* pointArray in self.arraysOfPoints)
-//    {
-        if (self.currentPointArray.count>0)
-        {
-            
-            ESPoint *p1 = [self.currentPointArray firstObject];
-            for (int i=1;i<self.currentPointArray.count;i++)
-            {
-                ESPoint *p2 = [self.currentPointArray objectAtIndex:i ];
-                CGContextSetStrokeColorWithColor(context, p1.color.CGColor);
-                CGContextSetLineWidth(context, 5);//self.strokeWidth);
-                if (p1.pointType==PTBeginPoint)
-                {
-                    CGContextMoveToPoint(context, p1.point.x, p1.point.y);
-                }
-                else if (p2.pointType!=PTBeginPoint) {
-                    CGContextMoveToPoint(context, p1.point.x, p1.point.y);
-                    CGContextAddLineToPoint(context, p2.point.x, p2.point.y);
-                    CGContextStrokePath(context);
-                }
-                p1=p2;
-            }
-        }
-//    }
+    [incrementalImage drawInRect:rect]; // (3)
+    [path stroke];
 }
+
 
 @end

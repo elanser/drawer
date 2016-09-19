@@ -1,0 +1,9 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "drawer"]
+	url = git@github.com:elanser/drawer.git
+	fetch = +refs/heads/*:refs/remotes/drawer/*

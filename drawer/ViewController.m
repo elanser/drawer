@@ -65,8 +65,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initObjects];
-    [self.viewDraw initMe];
-    [self.viewDraw setUserInteractionEnabled:YES];
 }
 
 - (void)didReceiveMemoryWarning {

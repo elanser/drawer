@@ -17,7 +17,6 @@ extern NSString* const ColorChangedKey;
 #pragma mark - ESViewDraw
 @interface ESViewDraw : UIView
 
-@property (strong,nonatomic) NSMutableArray *currentPointArray;
 @property (strong,nonatomic) UIColor *currentColor;
 
 -(void) initMe;

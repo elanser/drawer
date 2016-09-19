@@ -41,7 +41,7 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
 -(void) colorChanged:(NSNotification*) notification
 {
     self.currentColor = [notification.userInfo objectForKey:ColorChangedKey];
-    [self erase];
+  //  [self erase];
 }
 
 
@@ -51,23 +51,17 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
     if (self = [super initWithCoder:aDecoder]) {
         [self setMultipleTouchEnabled:NO];
         [self setBackgroundColor:[UIColor clearColor]];
+        [self setUserInteractionEnabled:YES];
         path = [UIBezierPath bezierPath];
         [path setLineWidth:5.0];
+        self.currentColor = [UIColor blackColor];
+        
+        [[NSNotificationCenter defaultCenter]   addObserver:self
+                                                   selector:@selector(colorChanged:)
+                                                       name:ColorChangedNotification
+                                                     object:nil];
     }
     return self;
-}
--(void) initMe
-{
-    NSMutableArray *array = [[NSMutableArray alloc]init];
-    
-    self.currentPointArray = array;
-    self.currentColor = [UIColor blackColor];
-    
-    [[NSNotificationCenter defaultCenter]   addObserver:self
-                                            selector:@selector(colorChanged:)
-                                            name:ColorChangedNotification
-                                            object:nil];
-
 }
 
 - (void)erase {
@@ -134,20 +128,27 @@ NSString* const ColorChangedKey=@"ColorChangedKey";
 - (void)drawBitmap // (3)
 {
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
-    //[[UIColor blueColor] setStroke];
     if (!incrementalImage) { // first draw;
         UIBezierPath *rectpath = [UIBezierPath bezierPathWithRect:self.bounds]; // enclosing bitmap by a rectangle defined by another UIBezierPath object
         [[UIColor clearColor] setFill];
         [rectpath fill]; // fill it
     }
     [incrementalImage drawAtPoint:CGPointZero];
+    [self setStrokeColor:self.currentColor];
     [path stroke];
     incrementalImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 }
 
+- (void)setStrokeColor:(UIColor*) color
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetStrokeColorWithColor(context, color.CGColor);
+}
 - (void)drawRect:(CGRect)rect
 {
+
+    [self setStrokeColor:self.currentColor];
     [incrementalImage drawInRect:rect]; // (3)
     [path stroke];
 }
